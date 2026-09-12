@@ -14,9 +14,9 @@ def compra(producto, cantidad, stock_act):
         stock_act -= cantidad
     return stock_act
 
-lista_productos = ["repuesto1", "repuesto2", "repuesto3", "repuesto4", "naranja"]
+lista_productos = ["repuesto1", "repuesto2", "repuesto3", "repuesto4", "repuesto5"]
 buy = int(input("Ingrese la cantidad a comprar: "))
-tipo = input("Ingrese repuesto1, repuesto2, repuesto3 o repuesto4: ")
+tipo = input("Ingrese repuesto1, repuesto2, repuesto3, repuesto4 o repuesto5: ")
 
 if tipo in lista_productos:
     stock_act = compra(tipo, buy, 20)
