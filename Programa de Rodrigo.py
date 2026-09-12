@@ -45,7 +45,7 @@ stocks = {"repuesto1": 20, "repuesto2": 20, "repuesto3": 20, "repuesto4": 20}
 compras = []
 
 while True:
-    print(" MENÚ ")
+    print("\n MENÚ ")
     print("1. Registrar producto")
     print("2. Comprar producto")
     print("3. Ver lista de productos")
