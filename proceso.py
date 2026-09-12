@@ -1,38 +1,49 @@
-# Importamos las funciones "stock" y "compra" desde el archivo Definir.py
 from Definir import stock, compra
 
-# Creamos una lista que contiene todos los productos disponibles
+# Lista de productos disponibles
 lista_productos = ["repuesto1", "repuesto2", "repuesto3", "repuesto4", "repuesto5"]
-
-# Definimos la cantidad actual de productos disponibles en el inventario
+# Stock actual
 stock_act = 20
-
-# Definimos la cantidad mínima de productos que debe haber en el inventario
+# Stock mínimo
 stock_min = 10
+# Pedimos la cantidad que desea comprar
+# El programa seguirá preguntando hasta recibir un número válido
+while True:
+    try:
+        buy = int(input("Ingrese la cantidad a comprar: "))
 
-# Le pedimos al usuario que ingrese la cantidad de productos que desea comprar
-# int() convierte el dato ingresado de texto a un número entero
-buy = int(input("Ingrese la cantidad a comprar: "))
+        # Verificamos que la cantidad sea mayor que cero
+        if buy > 0:
+            break
+        else:
+            print("Ingrese un número mayor que 0.")
 
-# Le pedimos al usuario que ingrese el nombre del repuesto que desea comprar
-# .lower() convierte todo lo escrito a minúsculas
-# Esto permite aceptar entradas como REPUESTO1, Repuesto1 o repuesto1
-tipo = input("Ingrese repuesto1, repuesto2, repuesto3, repuesto4 o repuesto5: ").lower()
+    # Si el usuario escribe letras o algo que no se pueda convertir
+    # a entero, mostramos un mensaje y volvemos a preguntar
+    except ValueError:
+        print("Entrada no válida. Ingrese un número.")
 
-# Comprobamos si el producto ingresado NO se encuentra en la lista
-# Mientras el producto no sea válido, el programa seguirá preguntando
+
+# Pedimos el tipo de producto
+tipo = input(
+    "Ingrese repuesto1, repuesto2, repuesto3, repuesto4 o repuesto5: "
+).lower()
+
+
+# Verificamos que el producto exista
 while tipo not in lista_productos:
-
-    # Mostramos un mensaje indicando que el producto ingresado no existe
     print("Producto no encontrado.")
 
-    # Volvemos a pedir al usuario que ingrese un producto
-    # .lower() permite aceptar mayúsculas y minúsculas
-    tipo = input("Ingrese repuesto1, repuesto2, repuesto3, repuesto4 o repuesto5: ").lower()
+    tipo = input(
+        "Ingrese repuesto1, repuesto2, repuesto3, repuesto4 o repuesto5: "
+    ).lower()
 
-# Llamamos a la función "compra"
+
+# Realizamos la compra y actualizamos el stock
 stock_act = compra(tipo, buy, stock_act)
-# Llamamos a la función "stock"
+
+# Comprobamos el estado del stock
 stock(tipo, stock_act, stock_min)
-# Mostramos en pantalla la cantidad de productos que compró el cliente
+
+# Mostramos la cantidad comprada
 print("Cantidad comprada:", buy)
