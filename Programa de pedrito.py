@@ -21,7 +21,6 @@ tipo = input("Ingrese repuesto1, repuesto2, repuesto3 o repuesto4: ")
 if tipo in lista_productos:
     stock_act = compra(tipo, buy, 20)
     stock(tipo, stock_act, 10)
+    print("cantidad comprada:", buy)
 else:
     print("Producto no encontrado")
-
-print("cantidad comprada:", buy)
