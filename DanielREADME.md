@@ -41,6 +41,8 @@ Este programa en Python permite gestionar el inventario de una tienda de repuest
 -margen_flete(float,opcional): Porcentaje adicional por costos de envio y manejo logistico. Por defecto es "0.05" (5%).
 
 #Retorno:
-    (tuple) (costo_subtotal_global, costo_gran_total)
-        costo_subtotal_global(float): Suma del costo de todos los repuestos a encargar.
-        costo_gran_total(float): Costo total incluyendo el marrgen de flete y logistica.
+(tuple) (costo_subtotal_global, costo_gran_total)
+       
+-costo_subtotal_global(float): Suma del costo de todos los repuestos a encargar.
+
+-costo_gran_total(float): Costo total incluyendo el marrgen de flete y logistica.
