@@ -68,19 +68,21 @@ def calcular_costos_restock (stocks, precios, stock_minimo=10, margen_flete=0.05
     for producto, cantidad_actual in stocks.items():
         precio_costo = precios.get(producto, 0.0)
         
-    if cantidad_actual <= stock_minimo:
+        if cantidad_actual <= stock_minimo:
             se_requiere_restock = True
+
             meta_inventario = stock_minimo * 2
             cantidad_a_pedir = meta_inventario - cantidad_actual
             costo_subtotal = cantidad_a_pedir * precio_costo
             costo_subtotal_global += costo_subtotal
+            stocks[producto] += cantidad_a_pedir
 
-    print(f"Producto: {producto.upper()}")
-    print(f" > Stock actual: {cantidad_actual}| Minimo: {stock_minimo}")
-    print(f" > Piezas a reponer: {cantidad_a_pedir} unidades")
-    print(f" > Costo unitario: ${precio_costo:.2f}")
-    print(f" > Subtotal restock: ${costo_subtotal:.2f}")
-    print("-"*50)
+            print(f"Producto: {producto.upper()}")
+            print(f" > Stock actual: {cantidad_actual} | Minimo: {stock_minimo}")
+            print(f" > Piezas a reponer: {cantidad_a_pedir} unidades")
+            print(f" > Costo unitario: ${precio_costo:.2f}")
+            print(f" > Subtotal restock: ${costo_subtotal:.2f}")
+            print("-" * 50)
 
     if not se_requiere_restock:
         print("Todos los productos tienen suficiente stock. No se requiere inversion de restock.")
@@ -111,6 +113,12 @@ stocks = {
     "repuesto3": 20,
     "repuesto4": 20
 }
+precios = {
+    "repuesto1": 5.00,
+    "repuesto2": 8.50,
+    "repuesto3": 3.75,
+    "repuesto4": 10.00
+}
 
 compras = []
 
@@ -121,7 +129,9 @@ while True:
     print("2. Comprar producto")
     print("3. Ver lista de productos")
     print("4. Ver compras realizadas")
-    print("5. Salir")
+    print("5. Restockear tienda")
+    print("6. Salir")
+
 
     opcion = input("Elija una opción: ").strip()
 
@@ -132,14 +142,17 @@ while True:
         comprar(lista_productos, stocks, compras)
 
     elif opcion == "3":
-        print(lista_productos)
+        print(stocks)
 
     elif opcion == "4":
         print(compras)
 
-    elif opcion == "5":
+    elif opcion == "6":
         print("Saliendo...")
         break
 
+    elif opcion == "5":
+        calcular_costos_restock(stocks, precios)
+        
     else:
         print("Opción inválida")
