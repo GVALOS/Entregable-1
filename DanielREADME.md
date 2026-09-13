@@ -27,7 +27,9 @@ Este programa en Python permite gestionar el inventario de una tienda de repuest
 1. calcular_costos_restock(stocks, precios, stock_minimo=10, margen_flete= 0.05)
 
 #Desarollado por: Daniel Brizuela
+
 #Descripcion: Analiza que productos del inventario están en o por debajo del stock minimo recomendado, determina la cantidad exacta de unidades necesarias para abastecer el almacen y calcula la proyeccion financiera del restock.
+
 #Parametros: 
     stocks(dict): Inventario con la cantidad actual disponible de cada producto.
     precios(dict): Precios unitarios de costo de cada producto.
