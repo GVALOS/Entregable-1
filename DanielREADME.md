@@ -31,10 +31,14 @@ Este programa en Python permite gestionar el inventario de una tienda de repuest
 #Descripcion: Analiza que productos del inventario están en o por debajo del stock minimo recomendado, determina la cantidad exacta de unidades necesarias para abastecer el almacen y calcula la proyeccion financiera del restock.
 
 #Parametros: 
-    stocks(dict): Inventario con la cantidad actual disponible de cada producto.
-    precios(dict): Precios unitarios de costo de cada producto.
-    stock_minimo(int,opcional): Cantidad limite que determina cuando un producto requiere restock. Valor por defecto: "10".
-    margen_flete(float,opcional): Porcentaje adicional por costos de envio y manejo logistico. Por defecto es "0.05" (5%).
+
+-stocks(dict): Inventario con la cantidad actual disponible de cada producto.
+    
+-precios(dict): Precios unitarios de costo de cada producto.
+    
+-stock_minimo(int,opcional): Cantidad limite que determina cuando un producto requiere restock. Valor por defecto: "10".
+
+-margen_flete(float,opcional): Porcentaje adicional por costos de envio y manejo logistico. Por defecto es "0.05" (5%).
 
 #Retorno:
     (tuple) (costo_subtotal_global, costo_gran_total)
