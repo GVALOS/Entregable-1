@@ -30,6 +30,7 @@ Este programa en Python permite gestionar el inventario de una tienda de repuest
 #Documentacion de Funciones
 
 1. stock(producto, stock_act, stock_min)
+Evalua la cantidad actual de un producto e imprime una advertencia en consola segun el limite minimo definido.
 
 #parametros:
 
@@ -43,6 +44,7 @@ Este programa en Python permite gestionar el inventario de una tienda de repuest
     none
 
 2. compra(producto, cantidad, stock_act)
+Procesa la reduccion de inventario tras una ventana o consumo.
 
 #Parametros:
 
@@ -60,6 +62,7 @@ Este programa en Python permite gestionar el inventario de una tienda de repuest
 -exito(bool): True si la compra fue exitosa, False si el stock fue insuficiente.
 
 3. resgistrar_producto(lista_productos, stocks)
+Permite al usuario agregar un nuevo repuesto al catalago mediante entradas por consola.
 
 #Parametros:
 
@@ -71,7 +74,7 @@ Este programa en Python permite gestionar el inventario de una tienda de repuest
     none
 
 4. comprar(lista_productos, stocks, compras)
-
+Maneja la interaccion de compra con el usuario, validando la existencia del producto y actualizando el historial de transacciones.
 #Parametros:
 
 -lista_productos(list): Productos registrados en el sistema.
@@ -84,6 +87,7 @@ Este programa en Python permite gestionar el inventario de una tienda de repuest
     none
 
 5. calcular_costos_restock(stocks, precios, stock_minimo=10, margen_flete= 0.05)
+Analiza que productos estan en o por debajo del stock minimo, calculo cuantos unidades se deben reponer para duplicar el stock minimo y proyecta los costos subtotales y totales considerando un porcentaje de flete.
 
 #Parametros: 
 
