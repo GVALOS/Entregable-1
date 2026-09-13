@@ -1,15 +1,15 @@
-#Sistema de Gestion de Inventario y Restock de Repuestos
+#Sistema de Gestión de Inventario y Restock de Repuestos
 
-##Descripcion del programa
-Este programa en Python permite gestionar el inventario de una tienda de repuestos. Integra funciones para controlar el nivel de stock de los productos, realizar transacciones de compra/descuento de inventario, resgistrar nuevos repuestos y calcular de forma automatica el costo necesario para finalizar el reabastecimiento considerando fletes y logistica.
+##Descripción del programa
+Este programa en Python permite gestionar el inventario de una tienda de repuestos. Integra funciones para controlar el nivel de stock de los productos, realizar transacciones de compra/descuento de inventario, registrar nuevos repuestos y calcular de forma automática el costo necesario para finalizar el reabastecimiento considerando fletes y logística.
 
 ##Integrantes del Equipo y Aportes
 
-|Pedro Reyes|Evaluacion de Inventario| Diseño la logica para evaluar la cantidad actual de productos contra el stock minimo permitido.|
-|Rodrigo|Gestion de Restock y Compras| Implemento las funciones para procesar transacciones de compra, registrar nuevos productos y el menu interactivo.|
-|Daniel Brizuela|Analisis Financiero de Restock| Desarolle el calculo de cosotos de reabastecimiento, subtotales por repuesto y estimacion con flete.|
-|Pedro Valle|Pruebas/Aseguramiento de calidad|Encargado de realizar las pruebas de codigo y vereficar casos de borde (ej. stock insuficiente, opciones invalidas).|
-|Gabriel Avalos|Revisor de Codigo y Control de github|Encargado de revisar y modificar el codigo segun las instrucciones dadas, ademas de verificar la correcta integracion del codigo y publicacion del repositorio en Github.|
+|Pedro Reyes|Evaluacion de Inventario| Comprobó las existencias del stock y dio a conocer la necesidad del restock.|
+|Rodrigo Gestión de Restock y Compras| Implemento las funciones para procesar transacciones de compra, registrar nuevos productos y el menú interactivo.|
+|Daniel Brizuela| Analisis Financiero de Restock| Desarolle el calculo de cosotos de reabastecimiento, subtotales por repuesto y estimacion con flete.|
+|Pedro Valle| Pruebas/Aseguramiento de calidad| Encargado de realizar las pruebas de codigo y vereficar casos de borde (ej. stock insuficiente, opciones invalidas).|
+|Gabriel Avalos| Revisor de Codigo y Control de github| Encargado de revisar y modificar el codigo segun las instrucciones dadas, ademas de verificar la correcta integracion del codigo y publicacion del repositorio en Github.|
 
 ##Como ejecutar el Programa
 
