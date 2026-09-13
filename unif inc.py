@@ -1,7 +1,8 @@
 def stock(producto, stock_act, stock_min):
-    print("producto:", producto)
+    print("\n--- INFORMACIÓN DEL STOCK ---")
+    print("Producto:", producto)
     print("Stock actual:", stock_act)
-    print("Stock minimo:", stock_min)
+    print("Stock mínimo:", stock_min)
 
     if stock_act <= stock_min:
         print("Stock bajo")
@@ -19,127 +20,307 @@ def compra(producto, cantidad, stock_act):
         return stock_act, False
 
 
-def registrar_producto(lista_productos, stocks):
+def registrar_producto(lista_productos, stocks, precios):
     nombre = input("Nombre del nuevo producto: ").strip().lower()
+
+    if nombre == "":
+        print("El nombre del producto no puede estar vacío.")
+        return
 
     if nombre in lista_productos:
         print("Ese producto ya existe.")
         return
 
-    cantidad_inicial = int(input("Stock inicial: "))
+    # Validación del stock inicial
+    while True:
+        try:
+            cantidad_inicial = int(input("Stock inicial: "))
+
+            if cantidad_inicial < 0:
+                print("El stock no puede ser negativo.")
+            else:
+                break
+
+        except ValueError:
+            print("Error: debes ingresar un número entero.")
+
+    # Validación del precio
+    while True:
+        try:
+            precio = float(input("Precio de costo del producto: $"))
+
+            if precio <= 0:
+                print("El precio debe ser mayor que cero.")
+            else:
+                break
+
+        except ValueError:
+            print("Error: debes ingresar un número válido.")
 
     lista_productos.append(nombre)
     stocks[nombre] = cantidad_inicial
+    precios[nombre] = precio
 
-    print(f"Producto '{nombre}' registrado con stock {cantidad_inicial}")
+    print(f"Producto '{nombre}' registrado correctamente.")
+    print(f"Stock inicial: {cantidad_inicial}")
+    print(f"Precio de costo: ${precio:.2f}")
 
 
 def comprar(lista_productos, stocks, compras):
-    print("Productos disponibles:", ", ".join(lista_productos))
+    if len(lista_productos) == 0:
+        print("No hay productos registrados.")
+        return
+
+    print("\nProductos disponibles:")
+    print(", ".join(lista_productos))
 
     tipo = input("Ingrese el producto a comprar: ").strip().lower()
 
     if tipo not in lista_productos:
-        print("Producto no encontrado")
+        print("Producto no encontrado.")
         return
 
-    buy = int(input("Ingrese la cantidad a comprar: "))
+    # Validación de cantidad
+    while True:
+        try:
+            buy = int(input("Ingrese la cantidad a comprar: "))
+
+            if buy <= 0:
+                print("La cantidad debe ser mayor que cero.")
+            else:
+                break
+
+        except ValueError:
+            print("Error: debes ingresar un número entero.")
 
     nuevo_stock, exito = compra(tipo, buy, stocks[tipo])
 
-    stocks[tipo] = nuevo_stock
-
-    stock(tipo, nuevo_stock, 10)
-
     if exito:
+        stocks[tipo] = nuevo_stock
+
+        stock(tipo, nuevo_stock, 10)
+
         compras.append((tipo, buy))
+
         print("Cantidad comprada:", buy)
+        print("Nuevo stock:", nuevo_stock)
 
 
-def calcular_costos_restock (stocks, precios, stock_minimo=10, margen_flete=0.05):
+def calcular_costos_restock(stocks, precios, stock_minimo=10, margen_flete=0.05):
 
-    print("/" + "="*50)
-    print(" REPORTE DE COSTOS DE RESTOCK")
-    print("="*50)
+    print("\n" + "=" * 50)
+    print("       REPORTE DE COSTOS DE RESTOCK")
+    print("=" * 50)
 
     costo_subtotal_global = 0.0
     se_requiere_restock = False
 
+    # Recorremos todos los productos
     for producto, cantidad_actual in stocks.items():
+
         precio_costo = precios.get(producto, 0.0)
-        
-    if cantidad_actual <= stock_minimo:
+
+        if cantidad_actual <= stock_minimo:
+
             se_requiere_restock = True
+
+            # Queremos tener el doble del stock mínimo
             meta_inventario = stock_minimo * 2
+
             cantidad_a_pedir = meta_inventario - cantidad_actual
+
             costo_subtotal = cantidad_a_pedir * precio_costo
+
             costo_subtotal_global += costo_subtotal
 
-    print(f"Producto: {producto.upper()}")
-    print(f" > Stock actual: {cantidad_actual}| Minimo: {stock_minimo}")
-    print(f" > Piezas a reponer: {cantidad_a_pedir} unidades")
-    print(f" > Costo unitario: ${precio_costo:.2f}")
-    print(f" > Subtotal restock: ${costo_subtotal:.2f}")
-    print("-"*50)
+            print(f"\nProducto: {producto.upper()}")
+            print(
+                f" > Stock actual: {cantidad_actual} | "
+                f"Mínimo: {stock_minimo}"
+            )
+            print(f" > Piezas a reponer: {cantidad_a_pedir}")
+            print(f" > Costo unitario: ${precio_costo:.2f}")
+            print(f" > Subtotal restock: ${costo_subtotal:.2f}")
+            print("-" * 50)
 
     if not se_requiere_restock:
-        print("Todos los productos tienen suficiente stock. No se requiere inversion de restock.")
+        print("\nTodos los productos tienen suficiente stock.")
+        print("No se requiere inversión de restock.")
         return 0.0, 0.0
 
     costo_total_flete = costo_subtotal_global * margen_flete
-    costo_gran_total = costo_subtotal_global + costo_total_flete
 
+    costo_gran_total = (
+        costo_subtotal_global + costo_total_flete
+    )
+
+    print("\n" + "=" * 50)
     print(f"SUBTOTAL NETO DE COMPRAS: ${costo_subtotal_global:.2f}")
-    print(f"FLETE Y LOGISTICA ({int(margen_flete*100)}%): ${costo_total_flete:.2f}")
-    print(f"COSTO TOTAL ESTIMADO RESTOCK: ${costo_gran_total:.2f}")
-    print("="*50 + "/n")
+    print(
+        f"FLETE Y LOGÍSTICA "
+        f"({int(margen_flete * 100)}%): "
+        f"${costo_total_flete:.2f}"
+    )
+    print(f"COSTO TOTAL ESTIMADO: ${costo_gran_total:.2f}")
+    print("=" * 50)
 
     return costo_subtotal_global, costo_gran_total
 
 
+def mostrar_productos(lista_productos, stocks, precios):
 
-lista_productos = [
-    "repuesto1",
-    "repuesto2",
-    "repuesto3",
-    "repuesto4"
-]
+    print("\n--- LISTA DE PRODUCTOS ---")
 
-stocks = {
-    "repuesto1": 20,
-    "repuesto2": 20,
-    "repuesto3": 20,
-    "repuesto4": 20
-}
+    if len(lista_productos) == 0:
+        print("No hay productos registrados.")
+        return
 
-compras = []
+    # Usamos for para mostrar cada producto
+    for producto in lista_productos:
+        print(
+            f"Producto: {producto} | "
+            f"Stock: {stocks[producto]} | "
+            f"Precio: ${precios[producto]:.2f}"
+        )
 
+
+def mostrar_compras(compras):
+
+    print("\n--- COMPRAS REALIZADAS ---")
+
+    if len(compras) == 0:
+        print("No se han realizado compras.")
+        return
+
+    for producto, cantidad in compras:
+        print(
+            f"Producto: {producto} | "
+            f"Cantidad comprada: {cantidad}"
+        )
+
+
+# --------------------------------------------------
+# FUNCIÓN PRINCIPAL
+# --------------------------------------------------
+
+def ejecutar_programa():
+
+    lista_productos = [
+        "repuesto1",
+        "repuesto2",
+        "repuesto3",
+        "repuesto4"
+    ]
+
+    stocks = {
+        "repuesto1": 20,
+        "repuesto2": 20,
+        "repuesto3": 20,
+        "repuesto4": 20
+    }
+
+    precios = {
+        "repuesto1": 15.00,
+        "repuesto2": 20.00,
+        "repuesto3": 10.00,
+        "repuesto4": 25.00
+    }
+
+    compras = []
+
+    # Menú principal
+    while True:
+
+        print("\n")
+        print("=" * 50)
+        print("             SISTEMA DE INVENTARIO")
+        print("=" * 50)
+        print("1. Registrar producto")
+        print("2. Comprar producto")
+        print("3. Ver lista de productos")
+        print("4. Ver compras realizadas")
+        print("5. Ver costos de restock")
+        print("6. Finalizar proceso")
+        print("=" * 50)
+
+        # Validación de opción
+        try:
+            opcion = int(input("Elija una opción: "))
+
+        except ValueError:
+            print("Error: debes ingresar un número del 1 al 6.")
+            continue
+
+        if opcion == 1:
+
+            registrar_producto(
+                lista_productos,
+                stocks,
+                precios
+            )
+
+        elif opcion == 2:
+
+            comprar(
+                lista_productos,
+                stocks,
+                compras
+            )
+
+        elif opcion == 3:
+
+            mostrar_productos(
+                lista_productos,
+                stocks,
+                precios
+            )
+
+        elif opcion == 4:
+
+            mostrar_compras(compras)
+
+        elif opcion == 5:
+
+            calcular_costos_restock(
+                stocks,
+                precios
+            )
+
+        elif opcion == 6:
+
+            print("\nFinalizando el proceso...")
+            break
+
+        else:
+            print("Opción inválida. Debes elegir entre 1 y 6.")
+
+
+# --------------------------------------------------
+# PROGRAMA PRINCIPAL
+# --------------------------------------------------
 
 while True:
-    print("\n MENÚ ")
-    print("1. Registrar producto")
-    print("2. Comprar producto")
-    print("3. Ver lista de productos")
-    print("4. Ver compras realizadas")
-    print("5. Salir")
 
-    opcion = input("Elija una opción: ").strip()
+    ejecutar_programa()
 
-    if opcion == "1":
-        registrar_producto(lista_productos, stocks)
+    print("\n" + "=" * 50)
+    print("          PROCESO FINALIZADO")
+    print("=" * 50)
 
-    elif opcion == "2":
-        comprar(lista_productos, stocks, compras)
+    while True:
 
-    elif opcion == "3":
-        print(lista_productos)
+        respuesta = input(
+            "¿Desea volver a ejecutar el programa? (s/n): "
+        ).strip().lower()
 
-    elif opcion == "4":
-        print(compras)
+        if respuesta == "s":
+            print("\nReiniciando el programa...\n")
+            break
 
-    elif opcion == "5":
-        print("Saliendo...")
-        break
+        elif respuesta == "n":
+            print("\nGracias por utilizar el sistema.")
+            print("Programa terminado.")
+            exit()
 
-    else:
-        print("Opción inválida")
+        else:
+            print("Respuesta inválida. Escriba 's' o 'n'.")
